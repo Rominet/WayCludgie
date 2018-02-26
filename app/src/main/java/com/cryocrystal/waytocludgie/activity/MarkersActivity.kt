@@ -1,19 +1,29 @@
-package com.cryocrystal.waytocludgie
+package com.cryocrystal.waytocludgie.activity
 
-import android.support.v7.app.AppCompatActivity
+import android.annotation.SuppressLint
 import android.os.Bundle
-
+import com.cryocrystal.mvp.app.PresenterAppCompatActivity
+import com.cryocrystal.waytocludgie.R
+import com.cryocrystal.waytocludgie.model.SanisetteRecordItem
+import com.cryocrystal.waytocludgie.presenter.MarkersContract
+import com.cryocrystal.waytocludgie.presenter.MarkersPresenter
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 
-class MarkersActivity : AppCompatActivity(), OnMapReadyCallback {
+class MarkersActivity : PresenterAppCompatActivity<MarkersPresenter>(), OnMapReadyCallback, MarkersContract {
+
+    override fun createPresenter(): MarkersPresenter {
+        return MarkersPresenter(this)
+    }
 
     private lateinit var mMap: GoogleMap
 
+    @SuppressLint("MissingSuperCall") // AS bug
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_markers)
@@ -23,15 +33,14 @@ class MarkersActivity : AppCompatActivity(), OnMapReadyCallback {
         mapFragment.getMapAsync(this)
     }
 
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
+    override fun onRecordsUpdated(records: List<SanisetteRecordItem>?) {
+        val descriptor = BitmapDescriptorFactory.fromResource(R.drawable.toilet_opened_arrow)
+        records?.forEach { mMap.addMarker(MarkerOptions()
+                .anchor(0.5f, 1f)
+                .icon(descriptor)
+                .position(LatLng(it.geometry.lat, it.geometry.lng)).title(it.fields.nomVoie)) }
+    }
+
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
@@ -39,5 +48,7 @@ class MarkersActivity : AppCompatActivity(), OnMapReadyCallback {
         val paris = LatLng(48.8597977, 2.3338404)
         //mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(paris, 14f))
+
+        presenter.fetchMarkers()
     }
 }
