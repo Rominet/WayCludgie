@@ -5,8 +5,9 @@ import android.os.Bundle
 import com.cryocrystal.mvp.app.PresenterAppCompatActivity
 import com.cryocrystal.waytocludgie.R
 import com.cryocrystal.waytocludgie.model.SanisetteRecordItem
-import com.cryocrystal.waytocludgie.presenter.MarkersContract
-import com.cryocrystal.waytocludgie.presenter.MarkersPresenter
+import com.cryocrystal.waytocludgie.model.SanisettesResponse
+import com.cryocrystal.waytocludgie.presenter.MainContract
+import com.cryocrystal.waytocludgie.presenter.MainPresenter
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -15,10 +16,10 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 
-class MarkersActivity : PresenterAppCompatActivity<MarkersPresenter>(), OnMapReadyCallback, MarkersContract {
+class MainActivity : PresenterAppCompatActivity<MainPresenter>(), OnMapReadyCallback, MainContract {
 
-    override fun createPresenter(): MarkersPresenter {
-        return MarkersPresenter(this)
+    override fun createPresenter(): MainPresenter {
+        return MainPresenter(this)
     }
 
     private lateinit var mMap: GoogleMap
@@ -26,19 +27,30 @@ class MarkersActivity : PresenterAppCompatActivity<MarkersPresenter>(), OnMapRea
     @SuppressLint("MissingSuperCall") // AS bug
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_markers)
+        setContentView(R.layout.activity_main)
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager
                 .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
     }
 
-    override fun onRecordsUpdated(records: List<SanisetteRecordItem>?) {
+    override fun onDisplayLoader() {
+
+    }
+
+    override fun onSuccess(data: SanisettesResponse) {
         val descriptor = BitmapDescriptorFactory.fromResource(R.drawable.toilet_opened_arrow)
-        records?.forEach { mMap.addMarker(MarkerOptions()
-                .anchor(0.5f, 1f)
-                .icon(descriptor)
-                .position(LatLng(it.geometry.lat, it.geometry.lng)).title(it.fields.nomVoie)) }
+        if (data.records != null)
+            data.records.forEach {
+                mMap.addMarker(MarkerOptions()
+                        .anchor(0.5f, 1f)
+                        .icon(descriptor)
+                        .position(LatLng(it.fields.lat, it.fields.lng)).title(it.fields.nomVoie))
+            }
+    }
+
+    override fun onWebError(e: Throwable) {
+
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -49,6 +61,6 @@ class MarkersActivity : PresenterAppCompatActivity<MarkersPresenter>(), OnMapRea
         //mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(paris, 14f))
 
-        presenter.fetchMarkers()
+        presenter.fetchMarkers(this)
     }
 }
