@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import com.cryocrystal.mvp.app.PresenterAppCompatActivity
 import com.cryocrystal.waytocludgie.R
+import com.cryocrystal.waytocludgie.model.SanisetteInfo
 import com.cryocrystal.waytocludgie.model.SanisetteRecordItem
 import com.cryocrystal.waytocludgie.model.SanisettesResponse
 import com.cryocrystal.waytocludgie.presenter.MainContract
@@ -19,7 +20,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 class MainActivity : PresenterAppCompatActivity<MainPresenter>(), OnMapReadyCallback, MainContract {
 
     override fun createPresenter(): MainPresenter {
-        return MainPresenter(this)
+        return MainPresenter(this, this)
     }
 
     private lateinit var mMap: GoogleMap
@@ -38,15 +39,16 @@ class MainActivity : PresenterAppCompatActivity<MainPresenter>(), OnMapReadyCall
 
     }
 
-    override fun onSuccess(data: SanisettesResponse) {
+    override fun onSanisettesUpdated(sanisettes: List<SanisetteInfo>?) {
         val descriptor = BitmapDescriptorFactory.fromResource(R.drawable.toilet_opened_arrow)
-        if (data.records != null)
-            data.records.forEach {
+        if (sanisettes != null){
+            sanisettes.forEach {
                 mMap.addMarker(MarkerOptions()
                         .anchor(0.5f, 1f)
                         .icon(descriptor)
-                        .position(LatLng(it.fields.lat, it.fields.lng)).title(it.fields.nomVoie))
+                        .position(LatLng(it.lat, it.lng)).title(it.streetName))
             }
+        }
     }
 
     override fun onWebError(e: Throwable) {
@@ -61,6 +63,6 @@ class MainActivity : PresenterAppCompatActivity<MainPresenter>(), OnMapReadyCall
         //mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(paris, 14f))
 
-        presenter.fetchMarkers(this)
+        presenter.fetchMarkers()
     }
 }

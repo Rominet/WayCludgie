@@ -70,6 +70,7 @@
             tools:text="18 ème" />
 
         <android.support.v7.widget.AppCompatImageButton
+            android:id="@+id/ibFavorite"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@null"

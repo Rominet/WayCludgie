@@ -5,7 +5,6 @@ interface Loading {
     fun onDisplayLoader()
 }
 
-interface DataLoading<in T> : Loading {
-    fun onSuccess(data : T)
+interface WebLoading : Loading {
     fun onWebError(e: Throwable)
 }

@@ -3,13 +3,13 @@ package com.cryocrystal.waytocludgie.adapter.rv
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
-import com.cryocrystal.mvp.GenericViewHolder
-import com.cryocrystal.waytocludgie.R
+import com.cryocrystal.waytocludgie.model.SanisetteInfo
 import com.cryocrystal.waytocludgie.model.SanisetteRecordItem
+import com.cryocrystal.waytocludgie.viewholder.SanisetteViewHolder
 
 class SanisettesAdapter(private val onClickListener: View.OnClickListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private val sanisettes: MutableList<SanisetteRecordItem> = ArrayList<SanisetteRecordItem>()
+    private val sanisettes: MutableList<SanisetteInfo> = ArrayList<SanisetteInfo>()
 
     init {
         setHasStableIds(true)
@@ -25,28 +25,18 @@ class SanisettesAdapter(private val onClickListener: View.OnClickListener) : Rec
 
     override fun getItemId(position: Int): Long {
         // There are so many useless fields in their DB, I'm not sure this one is the relevant one.
-        return sanisettes[position].fields.objectid.toLong()
+        return sanisettes[position].objectId.toLong()
     }
 
     override fun getItemCount(): Int {
         return sanisettes.size
     }
 
-    fun setSanisettes(sanisettes: List<SanisetteRecordItem>){
+    fun setSanisettes(sanisettes: List<SanisetteInfo>?){
         this.sanisettes.clear()
-        this.sanisettes.addAll(sanisettes)
-        notifyDataSetChanged()
-    }
-}
-
-class SanisetteViewHolder(parent: ViewGroup, onClickListener: View.OnClickListener) : GenericViewHolder<SanisetteRecordItem>(GenericViewHolder.createView(parent, R.layout.item_sanisette)) {
-
-    override fun bind(item: SanisetteRecordItem?) {
-        super.bind(item)
-        if (item == null){
-            return
+        if (sanisettes != null){
+            this.sanisettes.addAll(sanisettes)
         }
-
-
+        notifyDataSetChanged()
     }
 }

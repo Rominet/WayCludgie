@@ -14,13 +14,13 @@ fun fileExists(context: Context, fileName: String): Boolean {
 }
 
 
-inline fun <reified T : Any> loadFromCache(context: Context, fileName: String): T? {
-    var cacheData: T? = null
+fun <T> loadListFromCache(context: Context, fileName: String): List<T>? {
+    var cacheData: List<T>? = null
     if (fileExists(context, fileName)) {
         try {
             val fis = context.openFileInput(fileName)
             val mapper = jacksonObjectMapper()
-            cacheData = mapper.readValue<T>(fis)
+            cacheData = mapper.readValue<List<T>>(fis)
             fis.close()
         } catch (e: IOException) {
             e.printStackTrace()

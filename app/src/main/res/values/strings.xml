@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Way to Cludgie</string>
     <string name="title_activity_markers">Way to Cludgie</string>
+    <string name="borough_formated">%1$s ème</string>
 </resources>

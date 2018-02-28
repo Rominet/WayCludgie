@@ -9,21 +9,24 @@ import com.cryocrystal.mvp.app.PresenterFragment
 import com.cryocrystal.waytocludgie.R
 import com.cryocrystal.waytocludgie.activity.MainActivity
 import com.cryocrystal.waytocludgie.adapter.rv.SanisettesAdapter
+import com.cryocrystal.waytocludgie.model.SanisetteInfo
+import com.cryocrystal.waytocludgie.model.SanisetteRecordItem
 import com.cryocrystal.waytocludgie.model.SanisettesResponse
 import com.cryocrystal.waytocludgie.presenter.MainPresenter
 import com.cryocrystal.waytocludgie.presenter.SanisettListContract
+import com.cryocrystal.waytocludgie.presenter.SanisettesListPresenter
 import kotlinx.android.synthetic.main.fragment_sanisettes_list.*
 
-class SanisettesListFragment : PresenterFragment<MainPresenter>(), SanisettListContract {
+class SanisettesListFragment : PresenterFragment<SanisettesListPresenter>(), SanisettListContract {
 
     lateinit private var adapter: SanisettesAdapter
 
     override fun onDisplayLoader() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 
-    override fun onSuccess(data: SanisettesResponse) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun onSanisettesUpdated(sanisettes: List<SanisetteInfo>?) {
+        adapter.setSanisettes(sanisettes)
     }
 
     override fun onWebError(e: Throwable) {
@@ -37,6 +40,8 @@ class SanisettesListFragment : PresenterFragment<MainPresenter>(), SanisettListC
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        println("View created !! : " + context)
+
         adapter = SanisettesAdapter(onItemClicked)
         rvSanisettes.layoutManager = LinearLayoutManager(context)
         rvSanisettes.adapter = adapter
@@ -46,7 +51,7 @@ class SanisettesListFragment : PresenterFragment<MainPresenter>(), SanisettListC
 
     }
 
-    override fun createPresenter(): MainPresenter {
-        return (activity as MainActivity).presenter
+    override fun createPresenter(): SanisettesListPresenter {
+        return SanisettesListPresenter((activity as MainActivity).presenter, this)
     }
 }

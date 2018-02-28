@@ -2,7 +2,6 @@ package com.cryocrystal.waytocludgie.rxutils
 
 import android.content.Context
 import com.cryocrystal.mvp.rxutils.onIO
-import com.cryocrystal.waytocludgie.contractbehaviour.DataLoading
 import com.cryocrystal.waytocludgie.statics.Config
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
@@ -69,17 +68,3 @@ sealed class RequestedResponse<T> {
     class Cache<T>(val apiResponse: T?) : RequestedResponse<T>()
     class Remote<T>(val apiResponse: T) : RequestedResponse<T>()
 }
-
-fun <T> RequestedResponse<T>.treatSuccess(contract: DataLoading<T>) {
-    when (this) {
-        is RequestedResponse.Cache -> {
-            if (apiResponse == null) {
-                contract.onDisplayLoader()
-            } else {
-                contract.onSuccess(apiResponse)
-            }
-        }
-        is RequestedResponse.Remote -> contract.onSuccess(apiResponse)
-    }
-}
-
