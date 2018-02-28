@@ -20,8 +20,8 @@ class SanisetteViewHolder(parent: ViewGroup, onClickListener: View.OnClickListen
             return
         }
 
-        itemView.tvStreetNumber.text = item.streetName
-        itemView.tvStreetName.text = item.streetNumber
+        itemView.tvStreetNumber.text = item.streetNumber
+        itemView.tvStreetName.text = item.streetName
         itemView.tvBorough.text = context.getString(R.string.borough_formated, item.borough)
     }
 }

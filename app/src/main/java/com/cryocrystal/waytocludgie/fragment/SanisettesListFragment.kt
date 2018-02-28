@@ -10,9 +10,6 @@ import com.cryocrystal.waytocludgie.R
 import com.cryocrystal.waytocludgie.activity.MainActivity
 import com.cryocrystal.waytocludgie.adapter.rv.SanisettesAdapter
 import com.cryocrystal.waytocludgie.model.SanisetteInfo
-import com.cryocrystal.waytocludgie.model.SanisetteRecordItem
-import com.cryocrystal.waytocludgie.model.SanisettesResponse
-import com.cryocrystal.waytocludgie.presenter.MainPresenter
 import com.cryocrystal.waytocludgie.presenter.SanisettListContract
 import com.cryocrystal.waytocludgie.presenter.SanisettesListPresenter
 import kotlinx.android.synthetic.main.fragment_sanisettes_list.*

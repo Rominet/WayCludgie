@@ -5,8 +5,6 @@ import android.os.Bundle
 import com.cryocrystal.mvp.app.PresenterAppCompatActivity
 import com.cryocrystal.waytocludgie.R
 import com.cryocrystal.waytocludgie.model.SanisetteInfo
-import com.cryocrystal.waytocludgie.model.SanisetteRecordItem
-import com.cryocrystal.waytocludgie.model.SanisettesResponse
 import com.cryocrystal.waytocludgie.presenter.MainContract
 import com.cryocrystal.waytocludgie.presenter.MainPresenter
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -63,6 +61,6 @@ class MainActivity : PresenterAppCompatActivity<MainPresenter>(), OnMapReadyCall
         //mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(paris, 14f))
 
-        presenter.fetchMarkers()
+        presenter.fetchInfo()
     }
 }

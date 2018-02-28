@@ -1,22 +1,29 @@
 package com.cryocrystal.waytocludgie.model
 
-class SanisetteInfo(recordItem: SanisetteRecordItem) {
-    val objectId : Int = recordItem.fields.objectid
-    val source: String = recordItem.fields.source
-    val borough: String = recordItem.fields.arrondissement
-    val streetName: String = recordItem.fields.nomVoie
-    val streetNumber: String = recordItem.fields.numeroVoie
-    val administrator: String = recordItem.fields.gestionnaire
-    val lat: Double = recordItem.fields.position[0]
-    val lng: Double = recordItem.fields.position[1]
-    val openingHour: Int
-    val closingHour: Int
+class SanisetteInfo(val objectId: Int,
+                    val source: String,
+                    val borough: String,
+                    val streetName: String,
+                    val streetNumber: String,
+                    val administrator: String,
+                    val lat: Double,
+                    val lng: Double) {
+    var openingHour: Int = -1
+    var closingHour: Int = -1
 
-    init {
+    constructor(recordItem: SanisetteRecordItem) : this(recordItem.fields.objectid,
+            recordItem.fields.source,
+            recordItem.fields.arrondissement,
+            recordItem.fields.nomVoie,
+            recordItem.fields.numeroVoie,
+            recordItem.fields.gestionnaire,
+            recordItem.fields.position[0],
+            recordItem.fields.position[1]){
+
         val match = hourRegex.matchEntire(recordItem.fields.horairesOuverture)
-        if (match != null && match.groups.size >= 2){
-            openingHour = match.groupValues[0].toInt()
-            val closing = match.groupValues[1].toInt()
+        if (match != null && match.groups.size == 3){
+            openingHour = match.groupValues[1].toInt()
+            val closing = match.groupValues[2].toInt()
             closingHour = if (closing < 12) closing + 12 else closing  // Add 12h when format is not 24h ... 6h - 1h
         } else {
             openingHour = -1
@@ -25,7 +32,7 @@ class SanisetteInfo(recordItem: SanisetteRecordItem) {
     }
 
     companion object {
-        private val hourRegex : Regex = "(\\d{1,2})".toRegex()
+        private val hourRegex : Regex = """(\d{1,2}) h [-\/] (\d{1,2}).*""".toRegex()
     }
 
 }

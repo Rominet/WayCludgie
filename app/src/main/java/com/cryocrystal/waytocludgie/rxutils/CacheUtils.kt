@@ -1,8 +1,7 @@
 package com.cryocrystal.waytocludgie.rxutils
 
 import android.content.Context
-
-import com.fasterxml.jackson.module.kotlin.*
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import io.reactivex.Observable
 import java.io.File
 import java.io.IOException
