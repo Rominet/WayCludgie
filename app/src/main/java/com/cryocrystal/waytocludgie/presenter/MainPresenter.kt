@@ -17,7 +17,7 @@ import io.reactivex.rxkotlin.subscribeBy
 class MainPresenter(context: Context, private val contract: MainContract) : Presenter() {
 
     val sanisettesObservable = CacheRequest.createFromConfig<List<SanisetteInfo>>(
-            onCache = { loadListFromCache<SanisetteInfo>(context, Config.SANISETTES_CACHE_FILE_NAME) },
+            onCache = { loadListFromCache<SanisetteInfo>(context, Config.SANISETTES_CACHE_FILE_NAME, SanisetteInfo::class.java) },
             onWeb = { sanisetteApiServe.getCompleteList().map { response -> response.records!!.map { SanisetteInfo(it) } }.saveToCache(context, Config.SANISETTES_CACHE_FILE_NAME) },
             context = context)
             .observable
