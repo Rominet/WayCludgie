@@ -3,4 +3,5 @@
     <dimen name="card_sides_margin">3dp</dimen>
     <dimen name="card_top_bottom_margin">2.5dp</dimen>
     <dimen name="card_corner_radius">5dp</dimen>
+    <dimen name="slidingPanelHeight">50dp</dimen>
 </resources>

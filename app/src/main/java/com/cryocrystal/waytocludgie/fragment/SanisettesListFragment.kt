@@ -18,16 +18,8 @@ class SanisettesListFragment : PresenterFragment<SanisettesListPresenter>(), San
 
     lateinit private var adapter: SanisettesAdapter
 
-    override fun onDisplayLoader() {
-
-    }
-
     override fun onSanisettesUpdated(sanisettes: List<SanisetteInfo>?) {
         adapter.setSanisettes(sanisettes)
-    }
-
-    override fun onWebError(e: Throwable) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

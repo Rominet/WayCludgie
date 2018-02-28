@@ -39,12 +39,14 @@ class MainActivity : PresenterAppCompatActivity<MainPresenter>(), OnMapReadyCall
 
     override fun onSanisettesUpdated(sanisettes: List<SanisetteInfo>?) {
         val descriptor = BitmapDescriptorFactory.fromResource(R.drawable.toilet_opened_arrow)
+        mMap.clear()
         if (sanisettes != null){
             sanisettes.forEach {
                 mMap.addMarker(MarkerOptions()
                         .anchor(0.5f, 1f)
                         .icon(descriptor)
-                        .position(LatLng(it.lat, it.lng)).title(it.streetName))
+                        .position(LatLng(it.lat, it.lng))
+                        .title(it.streetName))
             }
         }
     }
@@ -56,9 +58,7 @@ class MainActivity : PresenterAppCompatActivity<MainPresenter>(), OnMapReadyCall
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
-        // Add a marker in Sydney and move the camera
         val paris = LatLng(48.8597977, 2.3338404)
-        //mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(paris, 14f))
 
         presenter.fetchInfo()
