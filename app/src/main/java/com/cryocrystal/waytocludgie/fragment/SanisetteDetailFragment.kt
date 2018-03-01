@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.cryocrystal.waytocludgie.R
 import com.cryocrystal.waytocludgie.model.SanisetteInfo
+import com.cryocrystal.waytocludgie.statics.Tools
 import kotlinx.android.synthetic.main.fragment_sanisette_detail.*
 
 class SanisetteDetailFragment : Fragment(){
@@ -26,10 +27,10 @@ class SanisetteDetailFragment : Fragment(){
         tvBorough.text = getString(R.string.borough_formated, info.borough)
         tvAdministrator.text = info.administrator
         tvSource.text = info.source
+        tvDistance.text = Tools.formatDistance(context!!, info.distance)
 
         tvOpeningHours.text = info.getOpeningHours(context!!)
         view.setOnClickListener {
-            println("CLIIIICK")
             fragmentManager?.popBackStack()
         }
     }

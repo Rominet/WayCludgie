@@ -1,6 +1,7 @@
 package com.cryocrystal.waytocludgie.presenter
 
 import android.content.Context
+import android.location.Location
 import com.cryocrystal.mvp.presenter.Presenter
 import com.cryocrystal.mvp.rxutils.VariableCollection
 import com.cryocrystal.waytocludgie.api.SanisettesApiService
@@ -15,6 +16,8 @@ import com.cryocrystal.waytocludgie.statics.Config
 import io.reactivex.rxkotlin.subscribeBy
 
 class MainPresenter(context: Context, private val contract: MainContract) : Presenter() {
+
+    private var currentLocation: Location? = null
 
     val sanisettesObservable = CacheRequest.createFromConfig<List<SanisetteInfo>>(
             onCache = { loadListFromCache<SanisetteInfo>(context, Config.SANISETTES_CACHE_FILE_NAME, SanisetteInfo::class.java) },
@@ -44,16 +47,30 @@ class MainPresenter(context: Context, private val contract: MainContract) : Pres
                 },
                 onError = { contract.onWebError(it) }))
 
-        link(sanisettesVariable.observable.subscribe {
-            contract.onSanisettesUpdated(it.toList())
+        link(sanisettesVariable.observable
+                .subscribe { results ->
+                    val location = currentLocation
+                    if (location != null){
+
+                        results.forEach { info ->
+                            val dist = FloatArray(1)
+                            Location.distanceBetween(info.lat, info.lng, location.latitude, location.longitude, dist)
+                            info.distance = dist[0] }
+                    }
+            contract.onSanisettesUpdated(results.toList())
         })
     }
 
-    private fun publishFromResultFromResponse(sanisettes : List<SanisetteInfo>?){
-        if (sanisettes == null){
+    fun updateInfosWithLocation(location: Location?) {
+        currentLocation = location
+        sanisettesVariable.publish()
+
+    }
+
+    private fun publishFromResultFromResponse(sanisettes: List<SanisetteInfo>?) {
+        if (sanisettes == null) {
             sanisettesVariable.clear()
-        }
-        else {
+        } else {
             sanisettesVariable.clear(false)
             sanisettesVariable.addAll(sanisettes)
         }

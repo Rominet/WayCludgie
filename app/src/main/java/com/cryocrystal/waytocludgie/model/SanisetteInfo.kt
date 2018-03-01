@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Parcel
 import android.os.Parcelable
 import com.cryocrystal.waytocludgie.R
+import com.fasterxml.jackson.annotation.JsonIgnore
 
 class SanisetteInfo(val objectId: Int,
                     val source: String,
@@ -15,6 +16,8 @@ class SanisetteInfo(val objectId: Int,
                     val lng: Double) : Parcelable {
     var openingHour: Int = -1
     var closingHour: Int = -1
+    @JsonIgnore
+    var distance: Float = 0f
 
     constructor(recordItem: SanisetteRecordItem) : this(recordItem.fields.objectid,
             recordItem.fields.source,
