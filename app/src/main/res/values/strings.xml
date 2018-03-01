@@ -14,4 +14,5 @@
     <string name="share">Share</string>
     <string name="all_the_time">All the time</string>
     <string name="opening_hours_format">%1$s h - %2$s h</string>
+    <string name="web_error">An error occurred! Please, check your internet connection.</string>
 </resources>

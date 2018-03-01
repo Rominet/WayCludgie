@@ -26,19 +26,24 @@ class CacheRequest<T : Any>(private val onCache: () -> T?, private val onWeb: ()
                 }
 
                 webSubscription = onWeb()
+                        .doOnError {
+                            if (noData) {
+                                subscriber.onError(it)
+                            }
+                        }
+                        .onErrorResumeNext(Observable.empty())
                         .doOnTerminate { subscriber.onComplete() }
-                        .subscribeBy(
-                                onNext = {
-                                    subscriber.onNext(RequestedResponse.Remote(it))
-                                    onSetNextUpdate()
-                                },
-                                onError = {
-                                    if (noData) {
-                                        subscriber.onError(it)
-                                    }
-                                }
-                        )
+                        .subscribe {
+                            subscriber.onNext(RequestedResponse.Remote(it))
+                            onSetNextUpdate()
+                        }
+
             }
+                    .onErrorReturn {
+                        print("noooooo")
+                        return@onErrorReturn null
+                    }
+
                     .doOnDispose {
                         webSubscription?.dispose()
                         webSubscription = null

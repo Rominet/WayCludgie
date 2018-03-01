@@ -2,6 +2,7 @@ package com.cryocrystal.waytocludgie.activity
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.widget.Toast
 import com.cryocrystal.mvp.app.PresenterAppCompatActivity
 import com.cryocrystal.waytocludgie.R
 import com.cryocrystal.waytocludgie.fragment.SanisetteDetailFragment
@@ -55,8 +56,7 @@ class MainActivity : PresenterAppCompatActivity<MainPresenter>(), OnMapReadyCall
     }
 
     override fun onWebError(e: Throwable) {
-        println("ELLLLOOO : " + e.message)
-        e.printStackTrace()
+        Toast.makeText(this, getString(R.string.web_error), Toast.LENGTH_LONG).show()
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
