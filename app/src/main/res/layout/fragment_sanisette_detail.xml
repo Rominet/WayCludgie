@@ -8,11 +8,103 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:background="@color/white"
+        android:baselineAligned="false"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white"
         android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingEnd="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingStart="10dp">
+
+        <TableLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:shrinkColumns="1">
+
+            <TableRow style="@style/TableRow">
+
+                <android.support.v7.widget.AppCompatTextView
+                    style="@style/TableLabel"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginRight="15dp"
+                    android:text="@string/street_number_label" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/tvStreetNumber"
+                    style="@style/TableData"
+                    tools:text="face 154" />
+            </TableRow>
+
+            <TableRow style="@style/TableRow">
+
+                <android.support.v7.widget.AppCompatTextView
+                    style="@style/TableLabel"
+                    android:text="@string/street_name_label" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/tvStreetName"
+                    style="@style/TableData"
+                    tools:text="Rue Ordener" />
+            </TableRow>
+
+            <TableRow style="@style/TableRow">
+
+                <android.support.v7.widget.AppCompatTextView
+                    style="@style/TableLabel"
+                    android:text="@string/borough_label" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/tvBorough"
+                    style="@style/TableData"
+                    tools:text="18 ème" />
+            </TableRow>
+
+            <TableRow style="@style/TableRow">
+
+                <android.support.v7.widget.AppCompatTextView
+                    style="@style/TableLabel"
+                    android:text="@string/opening_hours_label" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/tvOpeningHours"
+                    style="@style/TableData"
+                    tools:text="6 h - 22 h" />
+            </TableRow>
+
+            <TableRow style="@style/TableRow">
+
+                <android.support.v7.widget.AppCompatTextView
+                    style="@style/TableLabel"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/administrator_label" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/tvAdministrator"
+                    style="@style/TableData"
+                    tools:text="Toilette publique de la Ville de Paris" />
+            </TableRow>
+
+            <TableRow style="@style/TableRow">
+
+                <android.support.v7.widget.AppCompatTextView
+                    style="@style/TableLabel"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/source_label" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/tvSource"
+                    style="@style/TableData"
+                    android:autoLink="web"
+                    android:linksClickable="true"
+                    android:textColorLink="@color/links"
+                    tools:text="http://opendata.paris.fr" />
+            </TableRow>
+
+        </TableLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -33,115 +125,27 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="Opened" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/tvDistance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:gravity="center"
+                android:padding="5dp"
+                android:textColor="@color/colorAccent"
+                app:srcCompat="@drawable/ic_toggle_favorite"
+                tools:text="250 m" />
         </LinearLayout>
-
-
-        <TableLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:shrinkColumns="1">
-
-            <TableRow style="@style/TableRow">
-
-                <android.support.v7.widget.AppCompatTextView
-                    android:layout_marginEnd="15dp"
-                    android:layout_marginRight="15dp"
-                    android:text="@string/street_number_label"
-                    style="@style/TableLabel" />
-
-                <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/tvStreetNumber"
-                    tools:text="face 154"
-                    style="@style/TableData" />
-            </TableRow>
-
-            <TableRow style="@style/TableRow">
-
-                <android.support.v7.widget.AppCompatTextView
-                    android:text="@string/street_name_label"
-                    style="@style/TableLabel" />
-
-                <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/tvStreetName"
-                    tools:text="Rue Ordener"
-                    style="@style/TableData" />
-            </TableRow>
-
-            <TableRow style="@style/TableRow">
-
-                <android.support.v7.widget.AppCompatTextView
-                    android:text="@string/borough_label"
-                    style="@style/TableLabel" />
-
-                <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/tvBorough"
-                    tools:text="18 ème"
-                    style="@style/TableData" />
-            </TableRow>
-
-            <TableRow style="@style/TableRow">
-
-                <android.support.v7.widget.AppCompatTextView
-                    android:text="@string/opening_hours_label"
-                    style="@style/TableLabel" />
-
-                <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/tvOpeningHours"
-                    tools:text="6 h - 22 h"
-                    style="@style/TableData" />
-            </TableRow>
-
-            <TableRow style="@style/TableRow">
-
-                <android.support.v7.widget.AppCompatTextView
-                    android:layout_gravity="center_vertical"
-                    android:text="@string/administrator_label"
-                    style="@style/TableLabel" />
-
-                <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/tvAdministrator"
-                    tools:text="Toilette publique de la Ville de Paris"
-                    style="@style/TableData" />
-            </TableRow>
-
-            <TableRow style="@style/TableRow">
-
-                <android.support.v7.widget.AppCompatTextView
-                    android:layout_gravity="center_vertical"
-                    android:text="@string/source_label"
-                    style="@style/TableLabel" />
-
-                <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/tvSource"
-                    android:autoLink="web"
-                    android:linksClickable="true"
-                    android:textColorLink="@color/links"
-                    tools:text="http://opendata.paris.fr"
-                    style="@style/TableData" />
-            </TableRow>
-
-        </TableLayout>
-
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/tvDistance"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:background="@null"
-            android:gravity="center"
-            android:padding="5dp"
-            android:textColor="@color/colorAccent"
-            app:srcCompat="@drawable/ic_toggle_favorite"
-            tools:text="250 m" />
 
     </LinearLayout>
 
     <LinearLayout
-        android:background="@color/white"
-        android:paddingTop="5dp"
-        android:gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center"
+        android:paddingTop="5dp">
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/btDirections"
@@ -149,10 +153,10 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@null"
-            android:textSize="10sp"
-            android:textColor="@color/colorAccent"
             android:drawableTop="@drawable/ic_directions_24dp"
-            android:text="@string/directions" />
+            android:text="@string/directions"
+            android:textColor="@color/colorAccent"
+            android:textSize="10sp" />
 
         <ToggleButton
             android:id="@+id/btFavorite"
@@ -161,10 +165,10 @@
             android:layout_weight="1"
             android:background="@null"
             android:drawableTop="@drawable/ic_toggle_favorite"
-            android:textSize="10sp"
             android:textColor="@color/colorAccent"
+            android:textOff="@string/add_to_favorites"
             android:textOn="@string/remove_from_favorites"
-            android:textOff="@string/add_to_favorites"/>
+            android:textSize="10sp" />
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/btShare"
@@ -172,9 +176,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@null"
-            android:textSize="10sp"
-            android:textColor="@color/colorAccent"
             android:drawableTop="@drawable/ic_share_24dp"
-            android:text="@string/share" />
+            android:text="@string/share"
+            android:textColor="@color/colorAccent"
+            android:textSize="10sp" />
     </LinearLayout>
 </LinearLayout>

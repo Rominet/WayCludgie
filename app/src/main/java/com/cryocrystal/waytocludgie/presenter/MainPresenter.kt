@@ -13,6 +13,7 @@ import com.cryocrystal.waytocludgie.rxutils.RequestedResponse
 import com.cryocrystal.waytocludgie.rxutils.loadListFromCache
 import com.cryocrystal.waytocludgie.rxutils.saveToCache
 import com.cryocrystal.waytocludgie.statics.Config
+import com.google.android.gms.maps.model.Marker
 import io.reactivex.rxkotlin.subscribeBy
 
 class MainPresenter(context: Context, private val contract: MainContract) : Presenter() {

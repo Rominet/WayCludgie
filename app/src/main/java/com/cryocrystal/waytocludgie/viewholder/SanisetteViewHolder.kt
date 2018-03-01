@@ -23,6 +23,9 @@ class SanisetteViewHolder(parent: ViewGroup, onClickListener: View.OnClickListen
         itemView.tvStreetNumber.text = item.streetNumber
         itemView.tvStreetName.text = item.streetName
         itemView.tvBorough.text = context.getString(R.string.borough_formated, item.borough)
+        itemView.tvDistance.visibility = if (item.distance > 0) View.VISIBLE else View.GONE
         itemView.tvDistance.text = Tools.formatDistance(context, item.distance)
+
+        itemView.tag = item
     }
 }

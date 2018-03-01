@@ -6,7 +6,7 @@
     <com.sothree.slidinguppanel.SlidingUpPanelLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:sothree="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/sliding_layout"
+        android:id="@+id/slidingLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="bottom"
@@ -22,7 +22,7 @@
             android:layout_height="match_parent" />
 
         <fragment
-            android:id="@+id/panels"
+            android:id="@+id/panel"
             android:name="com.cryocrystal.waytocludgie.fragment.SanisettesListFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />

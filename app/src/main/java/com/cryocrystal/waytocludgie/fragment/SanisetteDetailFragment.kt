@@ -10,7 +10,7 @@ import com.cryocrystal.waytocludgie.model.SanisetteInfo
 import com.cryocrystal.waytocludgie.statics.Tools
 import kotlinx.android.synthetic.main.fragment_sanisette_detail.*
 
-class SanisetteDetailFragment : Fragment(){
+class SanisetteDetailFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_sanisette_detail, container, false)
@@ -27,6 +27,7 @@ class SanisetteDetailFragment : Fragment(){
         tvBorough.text = getString(R.string.borough_formated, info.borough)
         tvAdministrator.text = info.administrator
         tvSource.text = info.source
+        tvDistance.visibility = if (info.distance > 0) View.VISIBLE else View.GONE
         tvDistance.text = Tools.formatDistance(context!!, info.distance)
 
         tvOpeningHours.text = info.getOpeningHours(context!!)

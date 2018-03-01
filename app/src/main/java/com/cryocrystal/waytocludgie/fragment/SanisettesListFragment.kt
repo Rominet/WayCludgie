@@ -29,15 +29,13 @@ class SanisettesListFragment : PresenterFragment<SanisettesListPresenter>(), San
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        println("View created !! : " + context)
-
         adapter = SanisettesAdapter(onItemClicked)
         rvSanisettes.layoutManager = LinearLayoutManager(context)
         rvSanisettes.adapter = adapter
     }
 
     private val onItemClicked = View.OnClickListener { view ->
-
+        (activity as MainActivity).displayDetail(view.tag as SanisetteInfo)
     }
 
     override fun createPresenter(): SanisettesListPresenter {

@@ -1,5 +1,6 @@
 package com.cryocrystal.waytocludgie.adapter.rv
 
+import android.os.Debug
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
@@ -25,7 +26,7 @@ class SanisettesAdapter(private val onClickListener: View.OnClickListener) : Rec
 
     override fun getItemId(position: Int): Long {
         // There are so many useless fields in their DB, I'm not sure this one is the relevant one.
-        return sanisettes[position].objectId.toLong()
+        return sanisettes[position].hashCode().toLong()
     }
 
     override fun getItemCount(): Int {
@@ -37,6 +38,7 @@ class SanisettesAdapter(private val onClickListener: View.OnClickListener) : Rec
         if (sanisettes != null){
             this.sanisettes.addAll(sanisettes)
         }
+        println("HERERERERE")
         notifyDataSetChanged()
     }
 }

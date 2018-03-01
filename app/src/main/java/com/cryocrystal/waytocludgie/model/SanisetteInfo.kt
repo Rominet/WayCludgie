@@ -17,7 +17,7 @@ class SanisetteInfo(val objectId: Int,
     var openingHour: Int = -1
     var closingHour: Int = -1
     @JsonIgnore
-    var distance: Float = 0f
+    var distance: Float = -1f
 
     constructor(recordItem: SanisetteRecordItem) : this(recordItem.fields.objectid,
             recordItem.fields.source,
@@ -48,6 +48,21 @@ class SanisetteInfo(val objectId: Int,
                     if (openingHour == -1) '?' else openingHour,
                     if (closingHour == -1) '?' else closingHour)
         }
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as SanisetteInfo
+
+        if (objectId != other.objectId) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return objectId
     }
 
     //---------- Parcelable methods ----------
