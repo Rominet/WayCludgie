@@ -3,11 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="center"
+    android:layout_height="match_parent"
+    android:gravity="bottom"
     android:orientation="vertical">
 
     <LinearLayout
+        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -136,7 +137,8 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_marginTop="5dp"
+        android:background="@color/white"
+        android:paddingTop="5dp"
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

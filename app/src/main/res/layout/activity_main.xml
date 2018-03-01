@@ -1,24 +1,35 @@
-<com.sothree.slidinguppanel.SlidingUpPanelLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:sothree="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/sliding_layout"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="bottom"
-    sothree:umanoPanelHeight="@dimen/slidingPanelHeight"
-    sothree:umanoShadowHeight="4dp"
-    sothree:umanoScrollableView="@+id/rvSanisettes"
-    tools:context="com.cryocrystal.waytocludgie.activity.MainActivity">
+    android:layout_height="match_parent">
 
-    <fragment
-        android:id="@+id/map"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
+    <com.sothree.slidinguppanel.SlidingUpPanelLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:sothree="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/sliding_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom"
+        sothree:umanoPanelHeight="@dimen/slidingPanelHeight"
+        sothree:umanoScrollableView="@+id/rvSanisettes"
+        sothree:umanoShadowHeight="4dp"
+        tools:context="com.cryocrystal.waytocludgie.activity.MainActivity">
+
+        <fragment
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <fragment
+            android:id="@+id/panels"
+            android:name="com.cryocrystal.waytocludgie.fragment.SanisettesListFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </com.sothree.slidinguppanel.SlidingUpPanelLayout>
+
+    <FrameLayout
+        android:id="@+id/detailFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-
-    <fragment
-        android:id="@+id/panels"
-        android:name="com.cryocrystal.waytocludgie.fragment.SanisettesListFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-</com.sothree.slidinguppanel.SlidingUpPanelLayout>
+</FrameLayout>
