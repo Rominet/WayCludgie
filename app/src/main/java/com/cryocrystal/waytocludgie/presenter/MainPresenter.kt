@@ -28,14 +28,6 @@ class MainPresenter(context: Context, private val contract: MainContract) : Pres
         SanisettesApiService.create()
     }
 
-    override fun create() {
-        super.create()
-
-        link(sanisettesVariable.observable.subscribe {
-            contract.onSanisettesUpdated(it.toList())
-        })
-    }
-
     fun fetchInfo() {
         link(sanisettesObservable.subscribeBy(
                 onNext = {
@@ -51,6 +43,10 @@ class MainPresenter(context: Context, private val contract: MainContract) : Pres
                     }
                 },
                 onError = { contract.onWebError(it) }))
+
+        link(sanisettesVariable.observable.subscribe {
+            contract.onSanisettesUpdated(it.toList())
+        })
     }
 
     private fun publishFromResultFromResponse(sanisettes : List<SanisetteInfo>?){

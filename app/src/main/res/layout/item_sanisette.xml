@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    app:contentPadding="5dp"
     android:layout_marginBottom="@dimen/card_top_bottom_margin"
     android:layout_marginLeft="@dimen/card_sides_margin"
     android:layout_marginRight="@dimen/card_sides_margin"
@@ -12,69 +12,69 @@
     app:cardCornerRadius="@dimen/card_corner_radius">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:minHeight="?android:attr/listPreferredItemHeight"
-        android:orientation="horizontal">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:minHeight="?android:attr/listPreferredItemHeight"
+    android:orientation="horizontal">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-            <android.support.v7.widget.AppCompatImageView
-                android:id="@+id/ivStatus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                app:srcCompat="@drawable/toilet_opened_arrow" />
-
-            <android.support.v7.widget.AppCompatTextView
-                android:id="@+id/tvOpened"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="Opened" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <android.support.v7.widget.AppCompatTextView
-                android:id="@+id/tvStreetNumber"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="face 154" />
-
-            <android.support.v7.widget.AppCompatTextView
-                android:id="@+id/tvStreetName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="Rue Ordener" />
-        </LinearLayout>
-
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/tvBorough"
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/ivStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginStart="10dp"
-            tools:text="18 ème" />
+            android:layout_gravity="center"
+            app:srcCompat="@drawable/toilet_opened_arrow" />
 
-        <android.support.v7.widget.AppCompatImageButton
-            android:id="@+id/ibFavorite"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:background="@null"
-            app:srcCompat="@drawable/ic_toggle_favorite" />
-
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/tvOpened"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Opened" />
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/tvStreetNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="face 154" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/tvStreetName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Rue Ordener" />
+    </LinearLayout>
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/tvBorough"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        tools:text="18 ème" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/tvDistance"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@null"
+        android:gravity="center"
+        android:padding="5dp"
+        android:textColor="@color/colorAccent"
+        app:srcCompat="@drawable/ic_toggle_favorite"
+        tools:text="250 m" />
+
+</LinearLayout>
+
 </android.support.v7.widget.CardView>

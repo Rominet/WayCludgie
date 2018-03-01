@@ -39,7 +39,6 @@ class MainActivity : PresenterAppCompatActivity<MainPresenter>(), OnMapReadyCall
 
     override fun onSanisettesUpdated(sanisettes: List<SanisetteInfo>?) {
         val descriptor = BitmapDescriptorFactory.fromResource(R.drawable.toilet_opened_arrow)
-        mMap.clear()
         if (sanisettes != null){
             sanisettes.forEach {
                 mMap.addMarker(MarkerOptions()

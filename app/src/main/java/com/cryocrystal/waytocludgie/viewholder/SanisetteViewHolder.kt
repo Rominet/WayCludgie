@@ -11,7 +11,6 @@ class SanisetteViewHolder(parent: ViewGroup, onClickListener: View.OnClickListen
 
     init {
         itemView.setOnClickListener(onClickListener)
-        itemView.ibFavorite.setOnClickListener(onClickListener)
     }
 
     override fun bind(item: SanisetteInfo?) {

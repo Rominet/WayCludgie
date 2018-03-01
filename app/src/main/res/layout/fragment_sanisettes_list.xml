@@ -9,7 +9,7 @@
         android:layout_height="@dimen/slidingPanelHeight"
         android:layout_gravity="center"
         android:button="@null"
-        android:drawableTop="@drawable/ic_list_black_24dp"
+        android:drawableTop="@drawable/ic_list_24dp"
         android:gravity="center"
         android:text="WC list" />
 
