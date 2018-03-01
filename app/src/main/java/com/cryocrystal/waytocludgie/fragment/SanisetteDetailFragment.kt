@@ -29,7 +29,8 @@ class SanisetteDetailFragment : Fragment(){
 
         tvOpeningHours.text = info.getOpeningHours(context!!)
         view.setOnClickListener {
-            activity?.fragmentManager?.popBackStack()
+            println("CLIIIICK")
+            fragmentManager?.popBackStack()
         }
     }
 

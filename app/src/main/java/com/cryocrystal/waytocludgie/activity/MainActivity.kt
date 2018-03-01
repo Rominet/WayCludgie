@@ -1,7 +1,9 @@
 package com.cryocrystal.waytocludgie.activity
 
 import android.annotation.SuppressLint
+import android.graphics.Point
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import com.cryocrystal.mvp.app.PresenterAppCompatActivity
 import com.cryocrystal.waytocludgie.R
@@ -17,6 +19,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : PresenterAppCompatActivity<MainPresenter>(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener, MainContract {
 
@@ -72,7 +75,16 @@ class MainActivity : PresenterAppCompatActivity<MainPresenter>(), OnMapReadyCall
 
     override fun onMarkerClick(marker: Marker): Boolean {
         showDetail(marker.tag as SanisetteInfo)
-        return false
+        marker.showInfoWindow()
+        mMap.animateCamera(CameraUpdateFactory.newLatLng(getMarkerShiftedUpperSide(marker)))
+        return true
+    }
+
+    private fun getMarkerShiftedUpperSide(marker: Marker): LatLng {
+        val projection = mMap.projection
+        val markerPoint = projection.toScreenLocation(marker.position)
+        val targetPoint = Point(markerPoint.x, markerPoint.y + flRoot.height / 10) // Shifted by 10%
+        return projection.fromScreenLocation(targetPoint)
     }
 
     fun showDetail(info: SanisetteInfo){
