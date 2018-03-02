@@ -31,7 +31,10 @@ class SanisetteDetailFragment : Fragment() {
         val info = args.get(KEY_INFO) as SanisetteInfo;
         tvStreetName.text = info.streetName
         tvStreetNumber.text = info.streetNumber
-        tvBorough.text = getString(R.string.borough_formated, info.borough)
+
+        val borough = info.borough.toInt()
+        tvBorough.text = resources.getQuantityString(R.plurals.borough_suffix, borough, borough)
+
         tvAdministrator.text = info.administrator
         tvSource.text = info.source
 

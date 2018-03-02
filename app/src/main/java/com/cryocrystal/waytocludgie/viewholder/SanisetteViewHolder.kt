@@ -9,6 +9,7 @@ import com.cryocrystal.mvp.GenericViewHolder
 import com.cryocrystal.waytocludgie.R
 import com.cryocrystal.waytocludgie.model.SanisetteInfo
 import com.cryocrystal.waytocludgie.statics.Tools
+import kotlinx.android.synthetic.main.fragment_sanisette_detail.*
 import kotlinx.android.synthetic.main.item_sanisette.view.*
 
 class SanisetteViewHolder(parent: ViewGroup, onClickListener: View.OnClickListener) : GenericViewHolder<SanisetteInfo>(createView(parent, R.layout.item_sanisette)) {
@@ -32,7 +33,9 @@ class SanisetteViewHolder(parent: ViewGroup, onClickListener: View.OnClickListen
 
         itemView.tvStreetNumber.text = item.streetNumber
         itemView.tvStreetName.text = item.streetName
-        itemView.tvBorough.text = context.getString(R.string.borough_formated, item.borough)
+
+        val borough = item.borough.toInt()
+        itemView.tvBorough.text = resources.getQuantityString(R.plurals.borough_suffix, borough, borough)
 
         val distance = item.distance
         itemView.tvDistance.visibility = if (distance != null) View.VISIBLE else View.GONE

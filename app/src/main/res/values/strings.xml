@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">Way to Cludgie</string>
     <string name="title_activity_markers">Way to Cludgie</string>
-    <string name="borough_formated" translatable="false">%1$s ème</string>
     <string name="street_number_label">Street number</string>
     <string name="street_name_label">Street name</string>
     <string name="borough_label">Borough</string>
