@@ -72,17 +72,19 @@ class SanisetteDetailFragment : Fragment() {
         if (mapIntent.resolveActivity(activity?.packageManager) != null) { // If the user has googleMap
             startActivity(mapIntent);
         } else {
-            val webMapIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.google.com/maps/dir/?api=1&destination=${info.lat},${info.lng}&destination_place_id=Sanisette&travelmode=walking"))
+            val webMapIntent = Intent(Intent.ACTION_VIEW, Uri.parse(urlFromInfo(info)))
             startActivity(webMapIntent)
         }
     }
+
+    private fun urlFromInfo(info: SanisetteInfo): String =
+            "https://www.google.com/maps/dir/?api=1&destination=${info.lat},${info.lng}&destination_place_id=Sanisette&travelmode=walking"
 
     fun onSharedClicked(info: SanisetteInfo){
         val sendIntent = Intent()
         sendIntent.action = Intent.ACTION_SEND
         val funnyAnswers = context!!.resources.getStringArray(R.array.going_to_the_wc)
-        val msg = getString(R.string.share_message, funnyAnswers[Random().nextInt(funnyAnswers.size)],
-                "https://www.google.com/maps/dir/?api=1&destination=${info.lat},${info.lng}&destination_place_id=Sanisette&travelmode=walking")
+        val msg = getString(R.string.share_message, funnyAnswers[Random().nextInt(funnyAnswers.size)], urlFromInfo(info))
         sendIntent.putExtra(Intent.EXTRA_TEXT, msg)
         sendIntent.type = "text/plain"
         startActivity(Intent.createChooser(sendIntent, resources.getText(R.string.send_to)))
