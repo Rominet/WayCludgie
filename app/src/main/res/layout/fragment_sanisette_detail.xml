@@ -116,9 +116,10 @@
             <android.support.v7.widget.AppCompatImageView
                 android:id="@+id/ivStatus"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="65dp"
+                android:adjustViewBounds="true"
                 android:layout_gravity="center"
-                app:srcCompat="@drawable/toilet_opened_arrow" />
+                app:srcCompat="@drawable/toilet_opening_00012" />
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/tvOpened"

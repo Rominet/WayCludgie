@@ -4,7 +4,9 @@ import android.content.Context
 import android.os.Parcel
 import android.os.Parcelable
 import com.cryocrystal.waytocludgie.R
+import com.cryocrystal.waytocludgie.statics.Tools
 import com.fasterxml.jackson.annotation.JsonIgnore
+import java.util.*
 
 class SanisetteInfo(val objectId: Int,
                     val source: String,
@@ -18,6 +20,14 @@ class SanisetteInfo(val objectId: Int,
     var closingHour: Int = -1
     @JsonIgnore
     var distance: Float = -1f
+    val opened: Boolean
+        get() {
+            if (openingHour == -1 || closingHour == -1){
+                return false
+            }
+            val hourOfDay = Tools.nowCalendar.get(Calendar.HOUR_OF_DAY)
+            return (hourOfDay in openingHour..(closingHour - 1))
+        }
 
     constructor(recordItem: SanisetteRecordItem) : this(recordItem.fields.objectid,
             recordItem.fields.source,

@@ -17,4 +17,6 @@
     <string name="web_error">An error occurred! Please, check your internet connection.</string>
     <string name="meters_formatted">~ %1$.0f m</string>
     <string name="kilometers_formatted">~ %1$.1f km</string>
+    <string name="sanisette_opened">Opened</string>
+    <string name="sanisette_closed">Closed</string>
 </resources>

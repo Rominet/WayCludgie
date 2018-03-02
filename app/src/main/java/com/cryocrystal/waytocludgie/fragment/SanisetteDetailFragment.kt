@@ -1,7 +1,9 @@
 package com.cryocrystal.waytocludgie.fragment
 
+import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,6 +33,17 @@ class SanisetteDetailFragment : Fragment() {
         tvDistance.text = Tools.formatDistance(context!!, info.distance)
 
         tvOpeningHours.text = info.getOpeningHours(context!!)
+
+        tvOpened.text = context!!.getString(if (info.opened) R.string.sanisette_opened else R.string.sanisette_closed)
+        tvOpened.setTextColor(ContextCompat.getColor(context!!, if (info.opened) R.color.sanisette_opened else R.color.sanisette_closed))
+
+        val anim = ContextCompat.getDrawable(context!!, if (info.opened) R.drawable.toilet_opening else R.drawable.toilet_closing)
+        if (anim != null){
+            ivStatus.setImageDrawable(anim)
+            // Delay animation to the end of transition
+            ivStatus.postDelayed({(anim as AnimationDrawable).start()}, resources.getInteger(android.R.integer.config_shortAnimTime).toLong())
+        }
+
         view.setOnClickListener {
             fragmentManager?.popBackStack()
         }

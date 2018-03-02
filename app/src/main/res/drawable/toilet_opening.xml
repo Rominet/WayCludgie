@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android" android:oneshot="true">
+    <item android:duration="300" android:drawable="@drawable/toilet_opening_00000"/>
+    <item android:duration="50" android:drawable="@drawable/toilet_opening_00001"/>
+    <item android:duration="50" android:drawable="@drawable/toilet_opening_00002"/>
+    <item android:duration="50" android:drawable="@drawable/toilet_opening_00003"/>
+    <item android:duration="50" android:drawable="@drawable/toilet_opening_00004"/>
+    <item android:duration="50" android:drawable="@drawable/toilet_opening_00005"/>
+    <item android:duration="50" android:drawable="@drawable/toilet_opening_00006"/>
+    <item android:duration="50" android:drawable="@drawable/toilet_opening_00007"/>
+    <item android:duration="50" android:drawable="@drawable/toilet_opening_00008"/>
+    <item android:duration="50" android:drawable="@drawable/toilet_opening_00009"/>
+    <item android:duration="50" android:drawable="@drawable/toilet_opening_00010"/>
+    <item android:duration="50" android:drawable="@drawable/toilet_opening_00011"/>
+    <item android:duration="50" android:drawable="@drawable/toilet_opening_00012"/>
+    <item android:duration="50" android:drawable="@drawable/toilet_opening_00013"/>
+</animation-list>

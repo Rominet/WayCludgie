@@ -1,5 +1,8 @@
 package com.cryocrystal.waytocludgie.viewholder
 
+import android.graphics.drawable.AnimationDrawable
+import android.graphics.drawable.Drawable
+import android.support.v4.content.ContextCompat
 import android.view.View
 import android.view.ViewGroup
 import com.cryocrystal.mvp.GenericViewHolder
@@ -10,13 +13,20 @@ import kotlinx.android.synthetic.main.item_sanisette.view.*
 
 class SanisetteViewHolder(parent: ViewGroup, onClickListener: View.OnClickListener) : GenericViewHolder<SanisetteInfo>(createView(parent, R.layout.item_sanisette)) {
 
+    private val openingDrawable: Drawable? by lazy {
+        ContextCompat.getDrawable(context, R.drawable.toilet_opening)
+    }
+    private val closingDrawable: Drawable? by lazy {
+        ContextCompat.getDrawable(context, R.drawable.toilet_closing)
+    }
+
     init {
         itemView.setOnClickListener(onClickListener)
     }
 
     override fun bind(item: SanisetteInfo?) {
         super.bind(item)
-        if (item == null){
+        if (item == null) {
             return
         }
 
@@ -25,6 +35,15 @@ class SanisetteViewHolder(parent: ViewGroup, onClickListener: View.OnClickListen
         itemView.tvBorough.text = context.getString(R.string.borough_formated, item.borough)
         itemView.tvDistance.visibility = if (item.distance > 0) View.VISIBLE else View.GONE
         itemView.tvDistance.text = Tools.formatDistance(context, item.distance)
+
+        itemView.tvOpened.text = context.getString(if (item.opened) R.string.sanisette_opened else R.string.sanisette_closed)
+        itemView.tvOpened.setTextColor(ContextCompat.getColor(context, if (item.opened) R.color.sanisette_opened else R.color.sanisette_closed))
+
+        val anim = (if (item.opened) openingDrawable else closingDrawable)?.mutate()
+        if (anim != null){
+            itemView.ivStatus.setImageDrawable(anim)
+            (anim as AnimationDrawable).start()
+        }
 
         itemView.tag = item
     }

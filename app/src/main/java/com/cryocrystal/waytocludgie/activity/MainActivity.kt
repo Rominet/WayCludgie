@@ -69,7 +69,6 @@ class MainActivity : PresenterAppCompatActivity<MainPresenter>(), OnMapReadyCall
 
     }
 
-    @SuppressLint("MissingPermission")
     override fun onSanisettesUpdated(sanisettes: List<SanisetteInfo>?) {
         val descriptor = BitmapDescriptorFactory.fromResource(R.drawable.toilet_opened_arrow)
 
