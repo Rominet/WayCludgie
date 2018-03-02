@@ -7,7 +7,7 @@
     android:gravity="bottom"
     android:orientation="vertical">
 
-    <LinearLayout
+    <android.support.v7.widget.LinearLayoutCompat
         android:baselineAligned="false"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -106,7 +106,7 @@
 
         </TableLayout>
 
-        <LinearLayout
+        <android.support.v7.widget.LinearLayoutCompat
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center"
@@ -137,11 +137,11 @@
                 android:textColor="@color/colorAccent"
                 app:srcCompat="@drawable/ic_toggle_favorite"
                 tools:text="250 m" />
-        </LinearLayout>
+        </android.support.v7.widget.LinearLayoutCompat>
 
-    </LinearLayout>
+    </android.support.v7.widget.LinearLayoutCompat>
 
-    <LinearLayout
+    <android.support.v7.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
@@ -181,5 +181,5 @@
             android:text="@string/share"
             android:textColor="@color/colorAccent"
             android:textSize="10sp" />
-    </LinearLayout>
+    </android.support.v7.widget.LinearLayoutCompat>
 </LinearLayout>

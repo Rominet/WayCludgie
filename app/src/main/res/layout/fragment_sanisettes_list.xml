@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <android.support.v7.widget.AppCompatTextView
@@ -11,7 +12,65 @@
         android:button="@null"
         android:drawableTop="@drawable/ic_list_24dp"
         android:gravity="center"
-        android:text="WC list" />
+        android:text="@string/wc_list" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/filter_background"
+        android:drawableEnd="@drawable/ic_arrow_drop_down_24dp"
+        android:drawableRight="@drawable/ic_arrow_drop_down_24dp"
+        android:gravity="center_vertical"
+        android:padding="5dp"
+        android:text="@string/filters" />
+
+    <RelativeLayout
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:padding="5dp"
+        android:id="@+id/rlFiltersExpanded"
+        android:background="@color/filter_background_light"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.LinearLayoutCompat
+            android:id="@+id/llFilters"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/cbOpenedFilter"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:checked="true"
+                android:text="@string/sanisette_opened" />
+
+            <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/cbShowClosed"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:checked="true"
+                android:text="@string/sanisette_closed" />
+
+            <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/cbShowFavorites"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:checked="true"
+                android:text="@string/favorites" />
+        </android.support.v7.widget.LinearLayoutCompat>
+
+        <android.support.v7.widget.AppCompatSpinner
+            android:id="@+id/spSorter"
+            android:entries="@array/sort_options"
+            android:layout_below="@id/llFilters"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvSanisettes"

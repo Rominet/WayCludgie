@@ -19,4 +19,8 @@
     <string name="kilometers_formatted">~ %1$.1f km</string>
     <string name="sanisette_opened">Opened</string>
     <string name="sanisette_closed">Closed</string>
+    <string name="detail_title">Sanisette detail</string>
+    <string name="wc_list">Sanisettes list</string>
+    <string name="filters">Filters</string>
+    <string name="favorites">Favorites</string>
 </resources>

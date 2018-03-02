@@ -8,4 +8,6 @@
     <color name="links">#465af5</color>
     <color name="sanisette_opened">#39da8c</color>
     <color name="sanisette_closed">#da395c</color>
+    <color name="filter_background">#ba99e7</color>
+    <color name="filter_background_light">#e3dfea</color>
 </resources>
