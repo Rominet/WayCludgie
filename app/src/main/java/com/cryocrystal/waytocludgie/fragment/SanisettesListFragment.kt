@@ -1,6 +1,5 @@
 package com.cryocrystal.waytocludgie.fragment
 
-import android.animation.ObjectAnimator
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater

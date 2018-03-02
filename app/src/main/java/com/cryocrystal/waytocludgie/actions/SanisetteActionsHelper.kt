@@ -1,15 +1,12 @@
 package com.cryocrystal.waytocludgie.actions
 
 import android.content.Context
-import android.content.SharedPreferences
 import android.location.Location
-import android.support.v4.content.ContextCompat
 import com.cryocrystal.mvp.rxutils.VariableCollection
 import com.cryocrystal.waytocludgie.actions.SanisetteActionsHelper.SortOptions.*
 import com.cryocrystal.waytocludgie.contractbehaviour.SanisettesCallback
 import com.cryocrystal.waytocludgie.model.SanisetteInfo
 import com.cryocrystal.waytocludgie.statics.Config
-import kotlinx.android.synthetic.main.fragment_sanisette_detail.*
 
 class SanisetteActionsHelper(context: Context) {
 

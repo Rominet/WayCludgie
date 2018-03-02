@@ -1,11 +1,9 @@
 package com.cryocrystal.waytocludgie.adapter.rv
 
-import android.os.Debug
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
 import com.cryocrystal.waytocludgie.model.SanisetteInfo
-import com.cryocrystal.waytocludgie.model.SanisetteRecordItem
 import com.cryocrystal.waytocludgie.viewholder.SanisetteViewHolder
 
 class SanisettesAdapter(private val onClickListener: View.OnClickListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -38,7 +36,6 @@ class SanisettesAdapter(private val onClickListener: View.OnClickListener) : Rec
         if (sanisettes != null){
             this.sanisettes.addAll(sanisettes)
         }
-        println("HERERERERE")
         notifyDataSetChanged()
     }
 }

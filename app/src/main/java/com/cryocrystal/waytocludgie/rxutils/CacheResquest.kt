@@ -5,7 +5,6 @@ import com.cryocrystal.mvp.rxutils.onIO
 import com.cryocrystal.waytocludgie.statics.Config
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
-import io.reactivex.rxkotlin.subscribeBy
 
 class CacheRequest<T : Any>(private val onCache: () -> T?, private val onWeb: () -> Observable<T>, private val onGetNextUpdate: () -> Long, private val onSetNextUpdate: () -> Unit) {
     private var noData = false
