@@ -1,8 +1,5 @@
 package com.cryocrystal.waytocludgie.statics
 
-/**
- * Created by destr on 27/02/2018.
- */
 object Config {
     const val SHARED_PREF = "WcShPr"
     const val KEY_NEXT_UPDATE = "KeyNextUpdate"

@@ -13,6 +13,10 @@ import com.cryocrystal.waytocludgie.model.SanisetteInfo
 import com.cryocrystal.waytocludgie.statics.Tools
 import kotlinx.android.synthetic.main.fragment_sanisette_detail.*
 import kotlinx.android.synthetic.main.item_sanisette.view.*
+import android.content.Intent
+import android.net.Uri
+import java.util.*
+
 
 class SanisetteDetailFragment : Fragment() {
 
@@ -50,12 +54,38 @@ class SanisetteDetailFragment : Fragment() {
             ivStatus.postDelayed({(anim as AnimationDrawable).start()}, resources.getInteger(android.R.integer.config_shortAnimTime).toLong())
         }
 
+        btDirections.setOnClickListener { onDirectionClicked(info) }
+        btShare.setOnClickListener {onSharedClicked(info)}
+
         view.setOnClickListener {
             close()
         }
 
         //Show action bar at the end of transition (smooth ui)
         view.postDelayed({(activity as MainActivity).displayActionBar(true)}, resources.getInteger(android.R.integer.config_longAnimTime) + 100L)
+    }
+
+    fun onDirectionClicked(info: SanisetteInfo){
+        val gmmIntentUri = Uri.parse("google.navigation:q=${info.lat},${info.lng}(Sanisette)&mode=w")
+        val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
+        mapIntent.`package` = "com.google.android.apps.maps"
+        if (mapIntent.resolveActivity(activity?.packageManager) != null) { // If the user has googleMap
+            startActivity(mapIntent);
+        } else {
+            val webMapIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.google.com/maps/dir/?api=1&destination=${info.lat},${info.lng}&destination_place_id=Sanisette&travelmode=walking"))
+            startActivity(webMapIntent)
+        }
+    }
+
+    fun onSharedClicked(info: SanisetteInfo){
+        val sendIntent = Intent()
+        sendIntent.action = Intent.ACTION_SEND
+        val funnyAnswers = context!!.resources.getStringArray(R.array.going_to_the_wc)
+        val msg = getString(R.string.share_message, funnyAnswers[Random().nextInt(funnyAnswers.size)],
+                "https://www.google.com/maps/dir/?api=1&destination=${info.lat},${info.lng}&destination_place_id=Sanisette&travelmode=walking")
+        sendIntent.putExtra(Intent.EXTRA_TEXT, msg)
+        sendIntent.type = "text/plain"
+        startActivity(Intent.createChooser(sendIntent, resources.getText(R.string.send_to)))
     }
 
     fun close(){
@@ -66,8 +96,6 @@ class SanisetteDetailFragment : Fragment() {
     private fun onClose(){
         (activity as MainActivity).displayActionBar(false)
     }
-
-
 
     companion object {
 

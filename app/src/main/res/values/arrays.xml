@@ -5,4 +5,12 @@
         <item>Sort by distance</item>
         <item>Sort by borough</item>
     </string-array>
+
+    <string-array name="going_to_the_wc">
+        <item>fight a fire</item>
+        <item>dump some apple juice</item>
+        <item>go…nature calling</item>
+        <item>sit on the throne</item>
+        <item>put a log in the lake</item>
+    </string-array>
 </resources>

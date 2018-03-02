@@ -23,5 +23,7 @@
     <string name="wc_list">Sanisettes list</string>
     <string name="filters">Filters</string>
     <string name="favorites">Favorites</string>
-    <string name="loading_message">Checking if new Sanisette have appeared…</string>
+    <string name="loading_message">Checking if new Sanisette have appeared …</string>
+    <string name="share_message">If you ever need to %1$s, you could go there : %2$s</string>
+    <string name="send_to">Send to</string>
 </resources>
