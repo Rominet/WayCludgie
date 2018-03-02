@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Way to Cludgie</string>
+    <string name="add_to_favorites">Ajouter aux favoris</string>
+    <string name="administrator_label">Gestionnaire</string>
+    <string name="all_the_time">Tout le temps</string>
+    <string name="web_error">Une erreur est survenue ! Veuillez vérifier votre connexion internet.</string>
+    <string name="borough_label">Arrondissement</string>
+    <string name="loading_message">Verification de parachutage de Sanisettes…</string>
+    <string name="sanisette_closed">Fermé</string>
+    <string name="directions">Itinéraire</string>
+    <string name="favorites">Favoris</string>
+    <string name="filters">Filtres</string>
+    <string name="share_message">Si tu as besoin de %1$s, tu peux aller là : %2$s</string>
+    <string name="sanisette_opened">Ouvert</string>
+    <string name="opening_hours_label">Heures d\'ouvertures</string>
+    <string name="remove_from_favorites">Retirer des favoris</string>
+    <string name="detail_title">Informations</string>
+    <string name="wc_list">Liste de sanisettes</string>
+    <string name="send_to">Envoyer à</string>
+    <string name="share">Partager</string>
+    <string name="source_label">Source</string>
+    <string name="street_name_label">Nom de rue</string>
+    <string name="street_number_label">N°</string>
+    <string name="title_activity_markers">Way to Cludgie</string>
+</resources>

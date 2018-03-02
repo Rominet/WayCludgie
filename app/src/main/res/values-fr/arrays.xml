@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="sort_options">
+        <item>Trier par nom</item>
+        <item>Trier par distance</item>
+        <item>Trier par arrondissement</item>
+    </string-array>
+
+    <string-array name="going_to_the_wc">
+        <item>bénir les lieux</item>
+        <item>recycler le dîner</item>
+        <item>envoyer un fax à la lyonnaise des eaux</item>
+        <item>t\'asseoir sur le trone</item>
+        <item>déposer les petits à la piscine</item>
+    </string-array>
+</resources>
