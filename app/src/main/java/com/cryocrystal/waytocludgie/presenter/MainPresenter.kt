@@ -17,7 +17,7 @@ import io.reactivex.rxkotlin.subscribeBy
 
 class MainPresenter(context: Context, private val contract: MainContract) : Presenter() {
 
-    val actionsHelper = SanisetteActionsHelper()
+    val actionsHelper = SanisetteActionsHelper(context)
 
     private val sanisetteApiServe by lazy {
         SanisettesApiService.create()

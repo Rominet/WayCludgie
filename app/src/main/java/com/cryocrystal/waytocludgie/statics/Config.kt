@@ -3,6 +3,7 @@ package com.cryocrystal.waytocludgie.statics
 object Config {
     const val SHARED_PREF = "WcShPr"
     const val KEY_NEXT_UPDATE = "KeyNextUpdate"
+    const val KEY_FAVORITES = "KeyFavorites"
 
     const val SANISETTES_CACHE_FILE_NAME = "Sanisettes.data"
 
