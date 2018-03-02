@@ -4,10 +4,12 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.graphics.Point
+import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
 import android.os.Handler
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
+import android.support.v4.math.MathUtils
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
@@ -38,6 +40,19 @@ class MainActivity : PresenterAppCompatActivity<MainPresenter>(), OnMapReadyCall
     private val markersByInfo: HashMap<SanisetteInfo, Marker> = HashMap()
     private val handler = Handler()
     private var detailFragment: SanisetteDetailFragment? = null
+    private var startedAnimationTime: Long = 0
+
+    private val loadingDrawable by lazy {
+        tvLoadingText.compoundDrawables[1] as AnimationDrawable
+    }
+
+    val iconOpened by lazy {
+        BitmapDescriptorFactory.fromResource(R.drawable.toilet_opened_arrow)
+    }
+
+    val iconClosed by lazy {
+        BitmapDescriptorFactory.fromResource(R.drawable.toilet_closed_arrow)
+    }
 
     @SuppressLint("MissingSuperCall") // AS bug
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,7 +70,7 @@ class MainActivity : PresenterAppCompatActivity<MainPresenter>(), OnMapReadyCall
             }
 
             override fun onPanelStateChanged(panel: View, previousState: SlidingUpPanelLayout.PanelState, newState: SlidingUpPanelLayout.PanelState) {
-                if (newState == SlidingUpPanelLayout.PanelState.EXPANDED){
+                if (newState == SlidingUpPanelLayout.PanelState.EXPANDED) {
                     updateCurrentLocation()
                 }
             }
@@ -71,24 +86,41 @@ class MainActivity : PresenterAppCompatActivity<MainPresenter>(), OnMapReadyCall
     }
 
     override fun onDisplayLoader() {
+        llLoader.visibility = View.VISIBLE
+       startLoadingAnimation()
+    }
 
+    private fun startLoadingAnimation(){
+        loadingDrawable.start()
+        startedAnimationTime = System.currentTimeMillis()
+    }
+
+    private fun stopLoadingAnimation(){
+        val timeElapsedSinceAnimationStarted = System.currentTimeMillis() - startedAnimationTime
+        val delay = if (timeElapsedSinceAnimationStarted > Config.MINIMUM_LOADING_TIME) 0 else Config.MINIMUM_LOADING_TIME - timeElapsedSinceAnimationStarted
+        Handler().postDelayed({
+            loadingDrawable.stop()
+            llLoader.visibility = View.GONE
+        }, delay)
     }
 
     override fun onSanisettesUpdated(sanisettes: List<SanisetteInfo>?) {
-        val descriptor = BitmapDescriptorFactory.fromResource(R.drawable.toilet_opened_arrow)
+        stopLoadingAnimation()
 
         val allMakers = markersByInfo.values.toMutableList()
         sanisettes?.forEach {
             val marker: Marker
-            if (!markersByInfo.containsKey(it)){
+            if (!markersByInfo.containsKey(it)) {
                 marker = mMap.addMarker(MarkerOptions()
                         .anchor(0.5f, 1f)
-                        .icon(descriptor)
+                        .icon(if (it.opened) iconOpened else iconClosed)
                         .position(LatLng(it.lat, it.lng))
                         .title(it.streetName))
                 marker.snippet = it.streetNumber
             } else {
                 marker = markersByInfo[it]!!
+                marker.setIcon(if (it.opened) iconOpened else iconClosed)
+                marker.isVisible = true
             }
             marker.tag = it
             markersByInfo.put(it, marker)
@@ -97,13 +129,13 @@ class MainActivity : PresenterAppCompatActivity<MainPresenter>(), OnMapReadyCall
         allMakers.forEach { it.isVisible = false }
     }
 
-    private fun updateCurrentLocation(retryCount : Int = 0) {
+    private fun updateCurrentLocation(retryCount: Int = 0) {
         handler.removeCallbacksAndMessages(null)
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             fusedLocationClient.lastLocation
                     .addOnSuccessListener {
-                        if (it == null && retryCount < Config.POSITION_MAX_RETRY_COUNT){
-                            handler.postDelayed({updateCurrentLocation(retryCount + 1)}, Math.pow(retryCount.toDouble(), 2.0).toLong() * Config.POSITION_RETRY_STARTING_DELAY )
+                        if (it == null && retryCount < Config.POSITION_MAX_RETRY_COUNT) {
+                            handler.postDelayed({ updateCurrentLocation(retryCount + 1) }, Math.pow(retryCount.toDouble(), 2.0).toLong() * Config.POSITION_RETRY_STARTING_DELAY)
                         } else {
                             presenter.actionsHelper.updateCurrentLocation(it)
                         }
@@ -112,6 +144,7 @@ class MainActivity : PresenterAppCompatActivity<MainPresenter>(), OnMapReadyCall
     }
 
     override fun onWebError(e: Throwable) {
+        stopLoadingAnimation()
         Toast.makeText(this, getString(R.string.web_error), Toast.LENGTH_LONG).show()
     }
 
@@ -154,8 +187,8 @@ class MainActivity : PresenterAppCompatActivity<MainPresenter>(), OnMapReadyCall
 
     private fun onMarkerClick(marker: Marker, delayShowDetail: Boolean = true): Boolean {
         // Delay the fragment apparation for smoother ux
-        if (delayShowDetail){
-            Handler().postDelayed ({showDetailFragment(marker.tag as SanisetteInfo)}, resources.getInteger(android.R.integer.config_longAnimTime) + 100L)
+        if (delayShowDetail) {
+            Handler().postDelayed({ showDetailFragment(marker.tag as SanisetteInfo) }, resources.getInteger(android.R.integer.config_longAnimTime) + 100L)
         } else {
             showDetailFragment(marker.tag as SanisetteInfo)
         }
@@ -181,15 +214,15 @@ class MainActivity : PresenterAppCompatActivity<MainPresenter>(), OnMapReadyCall
                 .commit()
     }
 
-    fun displayDetail(info: SanisetteInfo){
+    fun displayDetail(info: SanisetteInfo) {
         slidingLayout.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
 
         val marker = markersByInfo[info]!!
         onMarkerClick(marker)
     }
 
-    fun displayActionBar(show: Boolean){
-        if (show){
+    fun displayActionBar(show: Boolean) {
+        if (show) {
             supportActionBar?.show()
         } else {
             supportActionBar?.hide()
@@ -200,17 +233,23 @@ class MainActivity : PresenterAppCompatActivity<MainPresenter>(), OnMapReadyCall
     }
 
     override fun onBackPressed() {
-
         // If there is a detail fragment close it
-        if (detailFragment != null && !detailFragment!!.isDetached){
-            detailFragment!!.close()
+
+        val frag = detailFragment
+        if (frag != null && frag.isVisible) {
+            frag.close()
+            return
+        }
+        // If the sliding panel is open, close it
+        if (slidingLayout.panelState != SlidingUpPanelLayout.PanelState.COLLAPSED) {
+            slidingLayout.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
             return
         }
         super.onBackPressed()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
+        when (item.itemId) {
             android.R.id.home -> {
                 supportFragmentManager.popBackStack()
                 displayActionBar(false)
@@ -223,3 +262,4 @@ class MainActivity : PresenterAppCompatActivity<MainPresenter>(), OnMapReadyCall
         private const val MY_LOCATION_REQUEST_CODE: Int = 4242
     }
 }
+

@@ -33,8 +33,13 @@ class SanisetteViewHolder(parent: ViewGroup, onClickListener: View.OnClickListen
         itemView.tvStreetNumber.text = item.streetNumber
         itemView.tvStreetName.text = item.streetName
         itemView.tvBorough.text = context.getString(R.string.borough_formated, item.borough)
-        itemView.tvDistance.visibility = if (item.distance > 0) View.VISIBLE else View.GONE
-        itemView.tvDistance.text = Tools.formatDistance(context, item.distance)
+
+        val distance = item.distance
+        itemView.tvDistance.visibility = if (distance != null) View.VISIBLE else View.GONE
+        if (distance != null){
+            itemView.tvDistance.text = Tools.formatDistance(context, distance)
+        }
+
 
         itemView.tvOpened.text = context.getString(if (item.opened) R.string.sanisette_opened else R.string.sanisette_closed)
         itemView.tvOpened.setTextColor(ContextCompat.getColor(context, if (item.opened) R.color.sanisette_opened else R.color.sanisette_closed))

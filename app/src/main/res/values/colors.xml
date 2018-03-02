@@ -10,4 +10,6 @@
     <color name="sanisette_closed">#da395c</color>
     <color name="filter_background">#ba99e7</color>
     <color name="filter_background_light">#e3dfea</color>
+
+    <color name="loading_overlay">#BBFFFFFF</color>
 </resources>

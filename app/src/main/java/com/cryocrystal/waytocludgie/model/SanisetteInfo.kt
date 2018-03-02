@@ -19,8 +19,9 @@ class SanisetteInfo(val objectId: Int,
     var openingHour: Int = -1
     var closingHour: Int = -1
     @JsonIgnore
-    var distance: Float = -1f
+    var distance: Float? = null
     val opened: Boolean
+        @JsonIgnore
         get() {
             if (openingHour == -1 || closingHour == -1){
                 return false

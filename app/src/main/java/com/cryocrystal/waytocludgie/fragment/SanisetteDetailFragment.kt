@@ -12,6 +12,7 @@ import com.cryocrystal.waytocludgie.activity.MainActivity
 import com.cryocrystal.waytocludgie.model.SanisetteInfo
 import com.cryocrystal.waytocludgie.statics.Tools
 import kotlinx.android.synthetic.main.fragment_sanisette_detail.*
+import kotlinx.android.synthetic.main.item_sanisette.view.*
 
 class SanisetteDetailFragment : Fragment() {
 
@@ -30,8 +31,12 @@ class SanisetteDetailFragment : Fragment() {
         tvBorough.text = getString(R.string.borough_formated, info.borough)
         tvAdministrator.text = info.administrator
         tvSource.text = info.source
-        tvDistance.visibility = if (info.distance > 0) View.VISIBLE else View.GONE
-        tvDistance.text = Tools.formatDistance(context!!, info.distance)
+
+        val distance = info.distance
+        tvDistance.visibility = if (distance != null) View.VISIBLE else View.GONE
+        if (distance != null){
+            tvDistance.text = Tools.formatDistance(context!!, distance)
+        }
 
         tvOpeningHours.text = info.getOpeningHours(context!!)
 

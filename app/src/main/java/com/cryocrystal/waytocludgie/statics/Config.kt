@@ -12,4 +12,6 @@ object Config {
     const val CACHE_DURATION = 1000L * 3600L * 24L // 24h
     const val POSITION_RETRY_STARTING_DELAY = 500L // 0.5 sec
     const val POSITION_MAX_RETRY_COUNT = 5
+
+    const val MINIMUM_LOADING_TIME = 3000L // 3 sec
 }

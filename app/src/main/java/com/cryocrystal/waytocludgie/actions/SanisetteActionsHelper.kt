@@ -2,15 +2,21 @@ package com.cryocrystal.waytocludgie.actions
 
 import android.location.Location
 import com.cryocrystal.mvp.rxutils.VariableCollection
+import com.cryocrystal.waytocludgie.actions.SanisetteActionsHelper.SortOptions.*
 import com.cryocrystal.waytocludgie.contractbehaviour.SanisettesCallback
 import com.cryocrystal.waytocludgie.model.SanisetteInfo
 
 class SanisetteActionsHelper {
 
+    enum class SortOptions {
+        BY_NAME, BY_DISTANCE, BY_BOROUGH
+    }
+
     private var currentLocation: Location? = null
     private var showOpened = true
     private var showClosed = true
     private var showFavorites = true
+    private var currentSort = BY_NAME
 
     private val sanisettesVariable = VariableCollection.create(ArrayList<SanisetteInfo>())
     val sanisettesObservable = sanisettesVariable.observable
@@ -27,7 +33,13 @@ class SanisetteActionsHelper {
         // Filter results
         contract.onSanisettesUpdated(results.filter {
             (showOpened && it.opened) || (showClosed && !it.opened)
-        })
+        }.sortedWith(
+                when(currentSort) {
+                    BY_NAME -> compareBy ({ it.streetName }, {it.streetNumber})
+                    BY_DISTANCE -> compareBy ({it.distance}, { it.streetName }, {it.streetNumber})
+                    BY_BOROUGH -> compareBy ({it.borough}, { it.streetName }, {it.streetNumber})
+                }))
+
     }
 
 
@@ -58,6 +70,11 @@ class SanisetteActionsHelper {
 
     fun filterFavorites(show: Boolean){
         showFavorites = show
+        sanisettesVariable.publish()
+    }
+
+    fun sortBy(sortOptions: SortOptions){
+        currentSort = sortOptions
         sanisettesVariable.publish()
     }
 }

@@ -23,4 +23,5 @@
     <string name="wc_list">Sanisettes list</string>
     <string name="filters">Filters</string>
     <string name="favorites">Favorites</string>
+    <string name="loading_message">Checking if new Sanisette have appeared…</string>
 </resources>

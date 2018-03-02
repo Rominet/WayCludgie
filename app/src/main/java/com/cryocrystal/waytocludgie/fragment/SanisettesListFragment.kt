@@ -6,8 +6,10 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import com.cryocrystal.mvp.app.PresenterFragment
 import com.cryocrystal.waytocludgie.R
+import com.cryocrystal.waytocludgie.actions.SanisetteActionsHelper
 import com.cryocrystal.waytocludgie.activity.MainActivity
 import com.cryocrystal.waytocludgie.adapter.rv.SanisettesAdapter
 import com.cryocrystal.waytocludgie.model.SanisetteInfo
@@ -49,6 +51,20 @@ class SanisettesListFragment : PresenterFragment<SanisettesListPresenter>(), San
         }
         cbShowFavorites.setOnCheckedChangeListener{ _, isChecked ->
             presenter.actionsHelper.filterFavorites(isChecked)
+        }
+
+        spSorter.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+                presenter.actionsHelper.sortBy(SanisetteActionsHelper.SortOptions.values()[position])
+            }
+
+        }
+        ibRefresh.setOnClickListener {
+            (activity as MainActivity).presenter.forceRefresh()
         }
     }
 

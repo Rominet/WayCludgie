@@ -2,6 +2,7 @@ package com.cryocrystal.waytocludgie.presenter
 
 import android.content.Context
 import com.cryocrystal.mvp.presenter.Presenter
+import com.cryocrystal.mvp.rxutils.onIO
 import com.cryocrystal.waytocludgie.actions.SanisetteActionsHelper
 import com.cryocrystal.waytocludgie.api.SanisettesApiService
 import com.cryocrystal.waytocludgie.contractbehaviour.SanisettesCallback
@@ -18,15 +19,20 @@ class MainPresenter(context: Context, private val contract: MainContract) : Pres
 
     val actionsHelper = SanisetteActionsHelper()
 
-    val sanisettesObservable = CacheRequest.createFromConfig<List<SanisetteInfo>>(
-            onCache = { loadListFromCache<SanisetteInfo>(context, Config.SANISETTES_CACHE_FILE_NAME, SanisetteInfo::class.java) },
-            onWeb = { sanisetteApiServe.getCompleteList().map { response -> response.records!!.map { SanisetteInfo(it) } }.saveToCache(context, Config.SANISETTES_CACHE_FILE_NAME) },
-            context = context)
-            .observable
-
     private val sanisetteApiServe by lazy {
         SanisettesApiService.create()
     }
+
+    val webObservable by lazy {
+        sanisetteApiServe.getCompleteList().map { response -> response.records!!.map { SanisetteInfo(it) } }.saveToCache(context, Config.SANISETTES_CACHE_FILE_NAME)
+    }
+
+    val sanisettesObservable = CacheRequest.createFromConfig<List<SanisetteInfo>>(
+            onCache = { loadListFromCache<SanisetteInfo>(context, Config.SANISETTES_CACHE_FILE_NAME, SanisetteInfo::class.java) },
+            onWeb = { webObservable },
+            context = context)
+            .observable
+
 
     fun fetchInfo() {
         link(sanisettesObservable.subscribeBy(
@@ -45,8 +51,18 @@ class MainPresenter(context: Context, private val contract: MainContract) : Pres
                 onError = { contract.onWebError(it) }))
 
         link(actionsHelper.sanisettesObservable
-                .subscribe { actionsHelper.treatResults(it, contract)
-        })
+                .subscribe {
+                    actionsHelper.treatResults(it, contract)
+                })
+    }
+
+    fun forceRefresh(){
+        contract.onDisplayLoader()
+        link(webObservable
+                .onIO()
+                .subscribeBy(
+                onNext = { actionsHelper.publishFromResultFromResponse(it) },
+                onError = { contract.onWebError(it) }))
     }
 }
 
