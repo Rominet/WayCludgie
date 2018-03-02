@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import com.cryocrystal.mvp.app.PresenterAppCompatActivity
@@ -36,6 +37,7 @@ class MainActivity : PresenterAppCompatActivity<MainPresenter>(), OnMapReadyCall
     private lateinit var mMap: GoogleMap
     private val markersByInfo: HashMap<SanisetteInfo, Marker> = HashMap()
     private val handler = Handler()
+    private var detailFragment: SanisetteDetailFragment? = null
 
     @SuppressLint("MissingSuperCall") // AS bug
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,6 +61,9 @@ class MainActivity : PresenterAppCompatActivity<MainPresenter>(), OnMapReadyCall
             }
 
         })
+
+        supportActionBar?.hide()
+        supportActionBar?.title = getString(R.string.detail_title)
     }
 
     override fun createPresenter(): MainPresenter {
@@ -72,18 +77,24 @@ class MainActivity : PresenterAppCompatActivity<MainPresenter>(), OnMapReadyCall
     override fun onSanisettesUpdated(sanisettes: List<SanisetteInfo>?) {
         val descriptor = BitmapDescriptorFactory.fromResource(R.drawable.toilet_opened_arrow)
 
-        mMap.clear()
-        markersByInfo.clear()
+        val allMakers = markersByInfo.values.toMutableList()
         sanisettes?.forEach {
-            val marker = mMap.addMarker(MarkerOptions()
-                    .anchor(0.5f, 1f)
-                    .icon(descriptor)
-                    .position(LatLng(it.lat, it.lng))
-                    .title(it.streetName))
-            marker.snippet = it.streetNumber
+            val marker: Marker
+            if (!markersByInfo.containsKey(it)){
+                marker = mMap.addMarker(MarkerOptions()
+                        .anchor(0.5f, 1f)
+                        .icon(descriptor)
+                        .position(LatLng(it.lat, it.lng))
+                        .title(it.streetName))
+                marker.snippet = it.streetNumber
+            } else {
+                marker = markersByInfo[it]!!
+            }
             marker.tag = it
             markersByInfo.put(it, marker)
+            allMakers.remove(marker)
         }
+        allMakers.forEach { it.isVisible = false }
     }
 
     private fun updateCurrentLocation(retryCount : Int = 0) {
@@ -162,9 +173,10 @@ class MainActivity : PresenterAppCompatActivity<MainPresenter>(), OnMapReadyCall
     }
 
     private fun showDetailFragment(info: SanisetteInfo) {
+        detailFragment = SanisetteDetailFragment.newInstance(info)
         supportFragmentManager.beginTransaction()
                 .setCustomAnimations(R.anim.slide_in_up, R.anim.slide_out_bottom, R.anim.slide_in_up, R.anim.slide_out_bottom)
-                .replace(R.id.detailFragment, SanisetteDetailFragment.newInstance(info), SanisetteDetailFragment.TAG)
+                .replace(R.id.detailFragment, detailFragment, SanisetteDetailFragment.TAG)
                 .addToBackStack(SanisetteDetailFragment.TAG)
                 .commit()
     }
@@ -176,6 +188,36 @@ class MainActivity : PresenterAppCompatActivity<MainPresenter>(), OnMapReadyCall
         onMarkerClick(marker)
     }
 
+    fun displayActionBar(show: Boolean){
+        if (show){
+            supportActionBar?.show()
+        } else {
+            supportActionBar?.hide()
+        }
+
+        supportActionBar?.setHomeButtonEnabled(show)
+        supportActionBar?.setDisplayHomeAsUpEnabled(show)
+    }
+
+    override fun onBackPressed() {
+
+        // If there is a detail fragment close it
+        if (detailFragment != null && !detailFragment!!.isDetached){
+            detailFragment!!.close()
+            return
+        }
+        super.onBackPressed()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            android.R.id.home -> {
+                supportFragmentManager.popBackStack()
+                displayActionBar(false)
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
 
     companion object {
         private const val MY_LOCATION_REQUEST_CODE: Int = 4242

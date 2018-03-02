@@ -32,6 +32,7 @@ class SanisettesListFragment : PresenterFragment<SanisettesListPresenter>(), San
         adapter = SanisettesAdapter(onItemClicked)
         rvSanisettes.layoutManager = LinearLayoutManager(context)
         rvSanisettes.adapter = adapter
+
     }
 
     private val onItemClicked = View.OnClickListener { view ->

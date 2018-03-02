@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.cryocrystal.waytocludgie.R
+import com.cryocrystal.waytocludgie.activity.MainActivity
 import com.cryocrystal.waytocludgie.model.SanisetteInfo
 import com.cryocrystal.waytocludgie.statics.Tools
 import kotlinx.android.synthetic.main.fragment_sanisette_detail.*
@@ -45,9 +46,23 @@ class SanisetteDetailFragment : Fragment() {
         }
 
         view.setOnClickListener {
-            fragmentManager?.popBackStack()
+            close()
         }
+
+        //Show action bar at the end of transition (smooth ui)
+        view.postDelayed({(activity as MainActivity).displayActionBar(true)}, resources.getInteger(android.R.integer.config_longAnimTime) + 100L)
     }
+
+    fun close(){
+        fragmentManager?.popBackStack()
+        onClose()
+    }
+
+    private fun onClose(){
+        (activity as MainActivity).displayActionBar(false)
+    }
+
+
 
     companion object {
 
