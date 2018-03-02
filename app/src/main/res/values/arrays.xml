@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="sort_options">
-        <item>Sort by distance</item>
         <item>Sort by name</item>
+        <item>Sort by distance</item>
         <item>Sort by borough</item>
     </string-array>
 </resources>

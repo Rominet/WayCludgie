@@ -105,7 +105,7 @@ class MainActivity : PresenterAppCompatActivity<MainPresenter>(), OnMapReadyCall
                         if (it == null && retryCount < Config.POSITION_MAX_RETRY_COUNT){
                             handler.postDelayed({updateCurrentLocation(retryCount + 1)}, Math.pow(retryCount.toDouble(), 2.0).toLong() * Config.POSITION_RETRY_STARTING_DELAY )
                         } else {
-                            presenter.updateInfosWithLocation(it)
+                            presenter.actionsHelper.updateCurrentLocation(it)
                         }
                     }
         }

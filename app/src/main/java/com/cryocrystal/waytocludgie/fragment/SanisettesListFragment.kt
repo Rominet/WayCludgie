@@ -1,5 +1,6 @@
 package com.cryocrystal.waytocludgie.fragment
 
+import android.animation.ObjectAnimator
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
@@ -13,6 +14,7 @@ import com.cryocrystal.waytocludgie.model.SanisetteInfo
 import com.cryocrystal.waytocludgie.presenter.SanisettListContract
 import com.cryocrystal.waytocludgie.presenter.SanisettesListPresenter
 import kotlinx.android.synthetic.main.fragment_sanisettes_list.*
+
 
 class SanisettesListFragment : PresenterFragment<SanisettesListPresenter>(), SanisettListContract {
 
@@ -33,6 +35,25 @@ class SanisettesListFragment : PresenterFragment<SanisettesListPresenter>(), San
         rvSanisettes.layoutManager = LinearLayoutManager(context)
         rvSanisettes.adapter = adapter
 
+        tvFiltersExpander.setOnClickListener {
+            val expanded = llFiltersExpanded.visibility == View.VISIBLE
+            llFiltersExpanded.visibility = if (expanded) View.GONE else View.VISIBLE
+            animateArrow(expanded)
+        }
+
+        cbShowOpened.setOnCheckedChangeListener{ _, isChecked ->
+            presenter.actionsHelper.filterOpened(isChecked)
+        }
+        cbShowClosed.setOnCheckedChangeListener{ _, isChecked ->
+            presenter.actionsHelper.filterClosed(isChecked)
+        }
+        cbShowFavorites.setOnCheckedChangeListener{ _, isChecked ->
+            presenter.actionsHelper.filterFavorites(isChecked)
+        }
+    }
+
+    private fun animateArrow(expanded: Boolean){
+        ivFiltersArrow.animate().rotation(if (expanded) 0f else 180f).start()
     }
 
     private val onItemClicked = View.OnClickListener { view ->
@@ -40,6 +61,6 @@ class SanisettesListFragment : PresenterFragment<SanisettesListPresenter>(), San
     }
 
     override fun createPresenter(): SanisettesListPresenter {
-        return SanisettesListPresenter((activity as MainActivity).presenter, this)
+        return SanisettesListPresenter((activity as MainActivity).presenter.actionsHelper, this)
     }
 }
